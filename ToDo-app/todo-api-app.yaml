@@ -4,6 +4,7 @@ metadata:
   name: todo-api-app
   labels:
     app: todo-api-backend
+  namespace: hands-on
 spec:
   replicas: 3
   selector:
@@ -33,7 +34,3 @@ spec:
             limits:
               memory: "512Mi"
               cpu: "500m"
-          volumes:
-            - name: 
-              configMap:
-                name: todo-api-config
