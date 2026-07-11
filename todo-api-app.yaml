@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-api-app
+  labels:
+    app: todo-api-backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: todo-api-backend
+      type: Flask-app
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: todo-api-backend
+        type: Flask-app
+    spec:
+      containers:
+        - name: todo-api-backend
+          image: _{{ .Values.image.repository }}:{{ .Values.image.tag }}
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          volumes:
+            - name: 
+              configMap:
+                name: todo-api-config
