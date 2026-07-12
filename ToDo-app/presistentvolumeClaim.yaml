@@ -1,7 +1,8 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mypvc
+  name: ToDo-pvc
+  namespace: hands-on
 spec:
   storageClassName: "local-path"
   resources:
