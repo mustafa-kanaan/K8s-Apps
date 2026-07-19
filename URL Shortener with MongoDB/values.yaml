@@ -1,0 +1,20 @@
+namespace: url-shortener
+
+mongodb:
+  rootUsername: mustafa-admin
+  rootPassword: dumypass123
+  storage:
+    size: 1Gi
+    storageClassName: local-path
+  replicas: 3
+  image: mongo:7.0
+
+app:
+  name: url-shortener
+  image: mustafa0kanaan/url-shortener:1.0
+  port: 8080
+  nodePort: 30090
+  replicas: 3
+
+db:
+  name: url-shortener

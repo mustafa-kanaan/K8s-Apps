@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Release.Name }}-url-shortener"
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: url-shortener
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: url-shortener
+  template:
+    metadata:
+      labels:
+        app: url-shortener
+    spec:
+      containers:
+        - name: url-shortener
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.app.port }}
+              name: http
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: url-shortener-config
+                  key: DB_HOST
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: url-shortener-config
+                  key: DB_NAME
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secrets
+                  key: MONGO_INITDB_ROOT_USERNAME
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secrets
+                  key: MONGO_INITDB_ROOT_PASSWORD
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: {{ .Values.app.port }}
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 3
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: {{ .Values.app.port }}
+            initialDelaySeconds: 20
+            periodSeconds: 15
+            timeoutSeconds: 3
