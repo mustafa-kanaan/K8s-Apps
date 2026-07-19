@@ -6,7 +6,7 @@ metadata:
   labels:
     app: url-shortener
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.app.replicas }}
   selector:
     matchLabels:
       app: url-shortener
@@ -35,12 +35,12 @@ spec:
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
-                  name: mongo-secrets
+                  name: mongodb-secret
                   key: MONGO_INITDB_ROOT_USERNAME
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mongo-secrets
+                  name: mongodb-secret
                   key: MONGO_INITDB_ROOT_PASSWORD
           resources:
             requests:
@@ -55,11 +55,11 @@ spec:
               port: {{ .Values.app.port }}
             initialDelaySeconds: 10
             periodSeconds: 10
-            timeoutSeconds: 3
+            timeoutSeconds: 8
           livenessProbe:
             httpGet:
               path: /health
               port: {{ .Values.app.port }}
             initialDelaySeconds: 20
             periodSeconds: 15
-            timeoutSeconds: 3
+            timeoutSeconds: 8

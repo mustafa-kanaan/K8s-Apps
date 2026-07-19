@@ -11,7 +11,7 @@ mongodb:
 
 app:
   name: url-shortener
-  image: mustafa0kanaan/url-shortener:1.0
+  image: mustafa0kanaan/url-shortener:1.1
   port: 8080
   nodePort: 30090
   replicas: 3

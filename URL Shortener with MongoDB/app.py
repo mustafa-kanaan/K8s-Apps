@@ -6,12 +6,12 @@ import random
 
 app = Flask(__name__)
 
-DB_HOST = os.environ.get("DB_HOST", "mongodb-0.mongodb-headless,mongodb-1.mongodb-headless,mongodb-2.mongodb-headless")
+DB_HOST = os.environ.get("DB_HOST", "mongodb-0.mongodb-headless:27017,mongodb-1.mongodb-headless:27017,mongodb-2.mongodb-headless:27017")
 DB_NAME = os.environ.get("DB_NAME", "urlshortener")
 DB_USER = os.environ.get("DB_USER", "admin")
 DB_PASSWORD = os.environ.get("DB_PASSWORD")
 
-uri = f"mongodb://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:27017/{DB_NAME}?replicaSet=rs0&authSource=admin"
+uri = f"mongodb://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}?replicaSet=rs0&authSource=admin"
 client = MongoClient(uri)
 db = client[DB_NAME]
 urls = db["urls"]

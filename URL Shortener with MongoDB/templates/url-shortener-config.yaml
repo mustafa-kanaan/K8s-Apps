@@ -4,5 +4,5 @@ metadata:
   name: url-shortener-config
   namespace: {{ .Values.namespace }}
 data:
-  DB_HOST: "mongodb-0.mongodb-headless,mongodb-1.mongodb-headless,mongodb-2.mongodb-headless"
+  DB_HOST: "mongodb-0.mongodb-headless:27017,mongodb-1.mongodb-headless:27017,mongodb-2.mongodb-headless:27017"
   DB_NAME: {{ .Values.db.name }}

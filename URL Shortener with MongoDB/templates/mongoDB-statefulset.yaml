@@ -40,18 +40,18 @@ spec:
           readinessProbe:
             exec:
               command:
-                - mongo
+                - mongosh
                 - --eval
-                - "rs.status()"
+                - "db.adminCommand('ping')"
             initialDelaySeconds: 15
             periodSeconds: 10
           livenessProbe:
             exec:
               command:
-                - mongo
+                - mongosh
                 - --eval
                 - "db.adminCommand('ping')"
-            initialDelaySeconds: 30
+            initialDelaySeconds: 20
             periodSeconds: 15
   volumeClaimTemplates:
     - metadata:
