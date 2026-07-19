@@ -57,9 +57,9 @@ spec:
     - metadata:
         name: mongodb-data
       spec:
-        storageClassName: {{ .Values.mongodb.storageClassName }}
+        storageClassName: {{ .Values.mongodb.storage.storageClassName }}
         accessModes:
           - ReadWriteOnce
         resources:
           requests:
-            storage: {{ .Values.mongodb.storageSize }}
+            storage: {{ .Values.mongodb.storage.size }}
